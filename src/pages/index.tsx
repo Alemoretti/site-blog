@@ -1,27 +1,22 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Button } from "@/components/ui/button";
+import { Header } from '@/components/header';
+import { Geist, Geist_Mono } from 'next/font/google';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  subsets: ['latin'],
+  variable: '--font-geist-sans',
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  subsets: ['latin'],
+  variable: '--font-geist-mono',
 });
 
 export default function Home() {
   return (
     <div
-      className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black`}
+      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
     >
-      <div className="min-h-screen min-w-full bg-slate-500">
-        <h1 className="text-4xl text-red-400">title</h1>
-        <Button variant={"secondary"}>Button</Button>
-      </div>
-      
+      <Header />
     </div>
   );
 }
