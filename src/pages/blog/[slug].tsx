@@ -15,7 +15,7 @@ export default function PostPage() {
   const router = useRouter();
   const slug = router.query.slug as string;
   const post = allPosts.find((post) =>
-    post.slug.toLowerCase().includes(slug.toLowerCase())
+    post.slug.toLowerCase() === slug.toLowerCase()
   );
 
   return (
