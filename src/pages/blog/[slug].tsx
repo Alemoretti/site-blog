@@ -12,17 +12,28 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Avatar } from '@/components/avatar';
 import { Markdown } from '@/components/markdown';
+import { Button } from '@/components/ui/button';
+import { useShare } from '@/hooks';
 
 export default function PostPage() {
   const router = useRouter();
   const slug = router.query.slug as string;
+  
   if (!slug) {
-    return <div>Loading...</div>; // or return null
+    return <div>Post not found</div>;
   }
+
   const post = allPosts.find(
     (post) => post.slug.toLowerCase() === slug.toLowerCase()
   )!;
   const publishedDate = new Date(post?.date).toLocaleDateString('pt-BR');
+  const postUrl = `https://site.set/blog/${slug}`;
+
+  const { shareButtons } = useShare({
+    url: postUrl,
+    title: post.title,
+    text: post.description,
+  });
 
   return (
     <main className="mt-32 text-gray-100">
@@ -79,8 +90,30 @@ export default function PostPage() {
               <Markdown content={post.body.raw} />
             </div>
           </article>
+
+          <aside className="space-y-6">
+            <div className="rounded-lg bg-gray-700">
+              <h2 className="mb-4 text-heading-xs text-gray-100">
+                Compartilhar
+              </h2>
+
+              <div className="space-y-3">
+                {shareButtons.map((provider) => (
+                  <Button
+                    key={provider.provider}
+                    onClick={() => provider.action()}
+                    variant="outline"
+                    className="w-full justify-start gap-2"
+                  >
+                    {provider.icon}
+                    {provider.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </aside>
         </div>
-      </div>{' '}
+      </div>
     </main>
   );
 }
